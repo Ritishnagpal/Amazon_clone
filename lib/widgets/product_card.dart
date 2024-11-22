@@ -19,7 +19,6 @@ class ProductCard extends StatelessWidget {
         title: Text(product.name),
         subtitle: Text('\$${product.price} - ${product.description}'),
         onTap: () {
-          // Navigate to Product Detail Screen
           Navigator.push(
             context,
             MaterialPageRoute(
