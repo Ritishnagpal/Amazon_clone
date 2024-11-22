@@ -9,8 +9,6 @@ class ProductScreen extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   ProductScreen({required this.category});
-
-  // Fetch products by category from Firestore
   Future<List<Map<String, dynamic>>> _fetchProducts(String category) async {
     try {
       final snapshot = await _firestore
@@ -31,7 +29,6 @@ class ProductScreen extends StatelessWidget {
       throw Exception('Failed to load products: $e');
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,17 +39,13 @@ class ProductScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
-
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('No products available.'));
           }
-
           final products = snapshot.data!;
-
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: GridView.builder(
@@ -73,7 +66,6 @@ class ProductScreen extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildProductCard(BuildContext context, Map<String, dynamic> product) {
     return GestureDetector(
       onTap: () {
@@ -207,7 +199,7 @@ class ProductDetailScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       if (product['discount'] != null &&
-                          product['discount'] != '') // Optional Discount
+                          product['discount'] != '')
                         Text(
                           '${product['discount']}% Off',
                           style: const TextStyle(
@@ -237,14 +229,11 @@ class ProductDetailScreen extends StatelessWidget {
                 ],
               ),
             ),
-
-            // Divider
             const Divider(thickness: 1),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Row(
                 children: [
-                  // Add to Cart Button
                   // Expanded(
                   //   child: ElevatedButton(
                   //     style: ElevatedButton.styleFrom(
