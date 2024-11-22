@@ -45,13 +45,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
     }
   }
-
-  // Update user details
   Future<void> _updateUserDetails() async {
     setState(() {
       _isUpdating = true;
     });
-
     try {
       final User? user = _auth.currentUser;
       if (user == null) throw Exception("No user is logged in!");
@@ -67,7 +64,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         );
         return;
       }
-
       await FirebaseFirestore.instance.collection('users').doc(uid).update({
         'name': updatedName,
         'email': updatedEmail,
@@ -139,7 +135,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 20),
-                // Name Section
                 _isNameEditing
                     ? TextField(
                   controller: _nameController,
@@ -164,7 +159,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                // Email Section
                 _isEmailEditing
                     ? TextField(
                   controller: _emailController,
