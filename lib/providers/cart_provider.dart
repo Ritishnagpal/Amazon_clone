@@ -12,7 +12,6 @@ class CartProvider with ChangeNotifier {
 
   List<CartItem> get cartItems => _cartItems;
 
-  // Fetch cart items from Firebase based on userId
   Future<void> fetchCartItems() async {
     final userId = _auth.currentUser?.uid;
     if (userId != null) {
@@ -35,38 +34,31 @@ class CartProvider with ChangeNotifier {
       }
     }
   }
-
-  // Add a product to the cart in Firebase
   Future<void> addToCart(Product product) async {
     final userId = _auth.currentUser?.uid;
     if (userId != null) {
       try {
         final cartRef = _firestore.collection('carts').doc(userId).collection('items');
         final cartItemRef = cartRef.doc(product.id);
-
-        // Check if product already exists in cart
         final doc = await cartItemRef.get();
         if (doc.exists) {
-          // Update quantity if product already exists in cart
+      
           final currentQuantity = doc['quantity'] ?? 0;
           await cartItemRef.update({
             'quantity': currentQuantity + 1,
           });
         } else {
-          // Add new product to cart
           await cartItemRef.set({
             'product': product.toMap(),
             'quantity': 1,
           });
         }
-        await fetchCartItems(); // Refresh cart after adding
+        await fetchCartItems(); 
       } catch (e) {
         print("Error adding to cart: $e");
       }
     }
   }
-
-  // Remove an item from the cart in Firebase
   Future<void> removeFromCart(CartItem cartItem) async {
     final userId = _auth.currentUser?.uid;
     if (userId != null) {
@@ -77,14 +69,12 @@ class CartProvider with ChangeNotifier {
             .collection('items')
             .doc(cartItem.product.id)
             .delete();
-        await fetchCartItems(); // Refresh cart after removal
+        await fetchCartItems(); 
       } catch (e) {
         print("Error removing from cart: $e");
       }
     }
   }
-
-  // Update quantity of a cart item in Firebase
   Future<void> updateQuantity(CartItem cartItem, int quantity) async {
     final userId = _auth.currentUser?.uid;
     if (userId != null) {
@@ -98,7 +88,7 @@ class CartProvider with ChangeNotifier {
             .collection('items')
             .doc(cartItem.product.id)
             .update({'quantity': quantity});
-        await fetchCartItems(); // Refresh cart after update
+        await fetchCartItems(); 
       } catch (e) {
         print("Error updating quantity: $e");
       }
