@@ -9,7 +9,6 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
 
-    // Fetch cart data on initial load
     cartProvider.fetchCartItems();
 
     double totalPrice = 0;
