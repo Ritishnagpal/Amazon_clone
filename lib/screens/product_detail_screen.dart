@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart'; // For cart provider
+import 'package:provider/provider.dart'; 
 import '../models/product_model.dart';
 import '../providers/cart_provider.dart';
 import 'checkout_screen.dart';
@@ -21,13 +21,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.product.name),
-        backgroundColor: Colors.orange, // Amazon-like color
+        backgroundColor: Colors.orange,
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Product Image Carousel
             SizedBox(
               height: 300,
               child: PageView(
@@ -43,25 +42,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Product Name
                   Text(
                     widget.product.name,
                     style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  // Product Price
                   Text(
                     '₹${widget.product.price.toStringAsFixed(2)}',
                     style: const TextStyle(fontSize: 22, color: Colors.green, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  // In Stock
                   Text(
                     'In Stock',
                     style: const TextStyle(fontSize: 18, color: Colors.green),
                   ),
                   const SizedBox(height: 16),
-                  // Product Description
                   const Text(
                     'Product Description',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -72,7 +67,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 16),
-                  // Buttons
                   Row(
                     children: [
                   Expanded(
@@ -81,20 +75,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     backgroundColor: Colors.orange,
                   ),
               onPressed: _isLoading
-                  ? null // Disable the button while processing
+                  ? null 
                   : () async {
                 setState(() {
                   _isLoading = true;
                 });
-
                 try {
                   final cartProvider =
                   Provider.of<CartProvider>(context, listen: false);
                   await cartProvider.addToCart(widget.product);
-
-                  // Optional: Show a success message or perform further actions.
                 } catch (e) {
-                  // Handle error if necessary
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Failed to add to cart: $e')),
                   );
@@ -138,7 +128,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   const SizedBox(height: 20),
                   const Divider(),
-                  // Reviews Section
                   const Text(
                     'Customer Reviews',
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
