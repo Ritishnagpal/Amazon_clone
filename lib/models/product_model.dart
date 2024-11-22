@@ -18,8 +18,6 @@ class Product {
     required this.description,
     this.quantity = 1,
   });
-
-  // Method to convert Product object to a Map for Firestore
   Map<String, dynamic> toMap() {
     return {
       'name': name,
@@ -31,7 +29,7 @@ class Product {
     };
   }
 
-  // Method to create Product object from Firestore Map
+  
   factory Product.fromMap(Map<String, dynamic> data, String documentId) {
     return Product(
       id: documentId,
