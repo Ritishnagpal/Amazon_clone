@@ -12,8 +12,6 @@ class CheckoutScreen extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
 
     double totalPrice = 0;
-
-    // Calculate the total price for the cart
     for (var cartItem in cartItems) {
       if (cartItem.product != null) {
         totalPrice += cartItem.product!.price * cartItem.quantity;
@@ -40,7 +38,6 @@ class CheckoutScreen extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: screenHeight * 0.02),
-            // Display all cart items
             ...cartItems.map((cartItem) {
               final product = cartItem.product!;
               return Card(
@@ -50,7 +47,6 @@ class CheckoutScreen extends StatelessWidget {
                   padding: EdgeInsets.all(screenWidth * 0.03),
                   child: Row(
                     children: [
-                      // Product image
                       Container(
                         width: screenWidth * 0.25,
                         height: screenWidth * 0.25,
@@ -63,7 +59,6 @@ class CheckoutScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: screenWidth * 0.03),
-                      // Product details
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,11 +93,9 @@ class CheckoutScreen extends StatelessWidget {
                   ),
                 ),
               );
-            }).toList(),
-            // Divider between order summary and address section
+            }).toList(),    
             Divider(thickness: 1.5, color: Colors.grey[300]),
             SizedBox(height: screenHeight * 0.02),
-            // Shipping Address
             const Text(
               'Shipping Address',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -119,7 +112,6 @@ class CheckoutScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: screenHeight * 0.03),
-            // Total Price Section
             Align(
               alignment: Alignment.centerRight,
               child: Text(
@@ -132,11 +124,9 @@ class CheckoutScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: screenHeight * 0.02),
-            // Confirm Purchase Button
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  // Simulate a purchase confirmation
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
@@ -145,8 +135,8 @@ class CheckoutScreen extends StatelessWidget {
                       actions: [
                         TextButton(
                           onPressed: () {
-                            Navigator.pop(context); // Close dialog
-                            Navigator.pop(context); // Navigate back
+                            Navigator.pop(context); 
+                            Navigator.pop(context); 
                           },
                           child: const Text('OK'),
                         ),
