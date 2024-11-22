@@ -38,7 +38,6 @@ class _AuthScreenState extends State<AuthScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Amazon Logo
               Padding(
                 padding: const EdgeInsets.only(top: 80.0, bottom: 10.0),
                 child: Image.asset(
@@ -57,7 +56,6 @@ class _AuthScreenState extends State<AuthScreen> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        // Welcome Text
                         Text(
                           _isLogin ? 'Sign-In' : 'Create Account',
                           style: const TextStyle(
@@ -66,7 +64,6 @@ class _AuthScreenState extends State<AuthScreen> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        // Name Field (Visible only in Sign-Up mode)
                         if (!_isLogin)
                           TextFormField(
                             controller: _nameController,
@@ -84,7 +81,6 @@ class _AuthScreenState extends State<AuthScreen> {
                             },
                           ),
                         if (!_isLogin) const SizedBox(height: 10),
-                        // Email Field
                         TextFormField(
                           controller: _emailController,
                           decoration: InputDecoration(
@@ -101,7 +97,6 @@ class _AuthScreenState extends State<AuthScreen> {
                           },
                         ),
                         const SizedBox(height: 10),
-                        // Password Field
                         TextFormField(
                           controller: _passwordController,
                           obscureText: true,
@@ -119,12 +114,11 @@ class _AuthScreenState extends State<AuthScreen> {
                           },
                         ),
                         const SizedBox(height: 20),
-                        // Action Button
                         _isLoading
                             ? const CircularProgressIndicator()
                             : ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFf0c14b), // Amazon button color
+                            backgroundColor: const Color(0xFFf0c14b),
                             minimumSize: Size(size.width * 0.8, 50),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -132,15 +126,12 @@ class _AuthScreenState extends State<AuthScreen> {
                           ),
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              // Validate email format
                               if (!_isValidEmail(_emailController.text.trim())) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(content: Text('Please enter a valid email address.')),
                                 );
                                 return;
                               }
-
-                              // Validate password length
                               if (_passwordController.text.trim().length < 6) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(content: Text('Password must be at least 6 characters.')),
@@ -154,7 +145,6 @@ class _AuthScreenState extends State<AuthScreen> {
 
                               try {
                                 if (_isLogin) {
-                                  // Handle Login
                                   await authProvider.signInWithEmailPassword(
                                     _emailController.text.trim(),
                                     _passwordController.text.trim(),
@@ -163,35 +153,25 @@ class _AuthScreenState extends State<AuthScreen> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(content: Text('Login successful!')),
                                   );
-
-                                  // Navigate to Profile Screen
                                   Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(builder: (context) => MainScreen()),
                                   );
                                 } else {
-                                  // Handle Registration
                                   await authProvider.registerWithEmailPassword(
                                     _nameController.text.trim(),
                                     _emailController.text.trim(),
                                     _passwordController.text.trim(),
                                   );
-
-
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(content: Text('Registration successful!')),
                                   );
-
-                                  // Navigate to Profile Screen
                                   Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(builder: (context) => MainScreen()),
                                   );
                                 }
-
-                                // Clear form fields after success
                                 _emailController.clear();
                                 _passwordController.clear();
                               } catch (e) {
-                                // Handle Errors
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text('Error: ${e.toString()}')),
                                 );
@@ -212,7 +192,6 @@ class _AuthScreenState extends State<AuthScreen> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        // Toggle Login/Register
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -241,7 +220,6 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              // OR Divider
               Row(
                 children: const [
                   Expanded(
@@ -257,7 +235,6 @@ class _AuthScreenState extends State<AuthScreen> {
                 ],
               ),
               const SizedBox(height: 20),
-              // Google Sign-In Button
               _isGoogleLoading
                   ? const CircularProgressIndicator()
                   : ElevatedButton.icon(
@@ -266,17 +243,12 @@ class _AuthScreenState extends State<AuthScreen> {
                     _isGoogleLoading = true;
                   });
                   try {
-                    // Sign in with Google
                     await authProvider.signInWithGoogle();
-
-                    // Navigate to the home screen after successful login
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => MainScreen()),
                     );
-                    // '/home' is the name of the home screen route
                   } catch (e) {
-                    // Show error message if the sign-in fails
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text(e.toString())),
                     );
@@ -287,7 +259,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   }
                 },
                 icon: Image.asset(
-                  'assets/images/google.png', // Add Google icon to your assets
+                  'assets/images/google.png', 
                   height: 20,
                 ),
                 label: const Text(
