@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'product_screen.dart'; // Replace with the screen where filtered products will be displayed
-
+import 'product_screen.dart'; 
 class CategoriesScreen extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
